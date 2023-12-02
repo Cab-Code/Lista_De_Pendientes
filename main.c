@@ -12,6 +12,24 @@ void agregarPendiente(char pendiente[]){
     fclose(db);
 }
 
+void eliminarPendientes(int item, int i, char originalDatos[]){
+    strcpy(originalDatos[item], "");
+
+        
+        FILE *db = fopen("dataBase.txt", "w");
+        fputs("", db);
+        fclose(db);
+
+        db = fopen("dataBase.txt", "a");
+        int elmi = 0;
+
+        while(elmi < i){
+            fputs(originalDatos[elmi], db);
+            elmi = elmi + 1;
+        }
+        fclose(db);
+}
+
 int cli(){
     system("cls");
     printf("\n****************************************************************************************************\n");
@@ -33,7 +51,7 @@ int cli(){
     int j = 0;
     
     while(j < i){
-        printf("| %d |  %s\n",j + 1 , originalDatos[j]); 
+        printf("| %d |  %s\n",j , originalDatos[j]); 
         j = j + 1;
     }
     printf("\n");
@@ -43,20 +61,29 @@ int cli(){
 
     if(strcmp(accion, "agregar") == 0){
         char newPendiente[101];
-        printf("| %d |", i + 1);
+        printf("| %d |", i - 1);
+        strcpy(originalDatos[i -1 ], " ");
         fflush(stdin);
         fgets(newPendiente, 101, stdin);
         agregarPendiente(newPendiente);
         cli();
     }
     else if(strcmp(accion, "eliminar") == 0){
-        printf("Funcionamiento GUI:");
+        int item = 0;
+        scanf("%d", &item);
+        eliminarPendientes(item, i, originalDatos);
+        cli();
+
+
     }
     else if(strcmp(accion, "salir") == 0){
-        printf("Sistema de AYUDA:");
+        printf("Cerrando programa ...");
     }
     else{
         printf("Comando inexistente");
+        int v = 0;
+        scanf("%s", &v);
+        cli();
     }
 }
 
