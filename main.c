@@ -12,7 +12,7 @@ void agregarPendiente(char pendiente[]){
     fclose(db);
 }
 
-void eliminarPendientes(int item, int i, char originalDatos[]){
+void eliminarPendientes(int item, int i, char originalDatos[][101]){
     strcpy(originalDatos[item], "");
 
         
@@ -80,16 +80,21 @@ int cli(){
         printf("Cerrando programa ...");
     }
     else{
-        printf("Comando inexistente");
+        printf("----------------------Comando inexistente----------------------");
         int v = 0;
-        scanf("%s", &v);
+        fflush(stdin);
+        getchar();
         cli();
     }
 }
 
 int main (int argc, char *argv[]){
-    char command[4];
-    strcpy(command, argv[1]);
+    char command[5];
+    if(argv[1] == NULL){
+        strcpy(command, "-gui");
+    }else{
+        strcpy(command, argv[1]);
+    }
 
     if(strcmp(command, "-cli") == 0){
         cli();
@@ -98,7 +103,16 @@ int main (int argc, char *argv[]){
         printf("Funcionamiento GUI:");
     }
     else if(strcmp(command, "-hlp") == 0){
-        printf("Sistema de AYUDA:");
+        system("cls");
+        printf("\n\nArgumentos de inicio de programa:\n\n");
+        printf("-cli : Inicia el programa con vista en Linea de comandos\n");
+        printf("    Comandos dentro de la vista cli\n");
+        printf("        agregar : Permite que en la siguiete linea se agregue un pendiente al final de la lista\n");
+        printf("        eliminar : Elimina el Pendiente especificado mediante su numero de indice\n");
+        printf("        salir : Cierra el programa de manera segura\n");
+        printf("-gui : Inicia el programa con vista Interfaz Grafica\n");
+        printf("-hlp : Muestra los comandos validos a utilizarse en el programa\n\n");
+
     }
     else{
         printf("Comando inexistente");
